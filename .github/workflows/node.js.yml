@@ -18,6 +18,13 @@
           strategy:
               matrix:
                   node-version: [20.x]
+          
+          services:
+            mongodb:
+              image: mongo
+              ports:
+                - 27017:27017
+              options: --name mongodb
 
           steps:
               - uses: actions/checkout@v3
@@ -27,7 +34,6 @@
                 with:
                   node-version: ${{ matrix.node-version }}
               - run: npm i
-              - run: mkdir data
               - run: mkdir data/db
               - run: mongod --dbpath=./data/db &
               - run: npm run start &
